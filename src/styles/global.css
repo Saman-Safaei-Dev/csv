@@ -1,0 +1,8 @@
+html,
+body {
+  font-family: Vazirmatn, sans-serif;
+}
+
+.rm-license > div > div:nth-child(3) {
+  display: none !important;
+}
