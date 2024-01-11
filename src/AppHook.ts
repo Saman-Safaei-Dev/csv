@@ -4,6 +4,7 @@ import { ThemeContext } from './contexts/Theme'
 import useSWR from 'swr'
 import { latestDataQuery } from './api/table-data'
 import { keys } from './api'
+import { GridValueFormatterParams } from '@mui/x-data-grid-pro'
 
 export default function useAppHook() {
   const ctx = useContext(ThemeContext)
@@ -30,10 +31,16 @@ export default function useAppHook() {
 
   const columns = useMemo(
     () => [
-      { field: 'id', headerName: 'آیدی', flex: 1 },
       { field: 'buyer', headerName: 'خریدار', flex: 1 },
-      { field: 'price', headerName: 'قیمت', flex: 1 },
-      { field: 'vol', headerName: 'مقدار', flex: 1 },
+      {
+        field: 'price',
+        headerName: 'مبلغ',
+        flex: 1,
+        valueFormatter: (data: GridValueFormatterParams<number>) => {
+          return data.value.toLocaleString('en')
+        },
+      },
+      { field: 'vol', headerName: 'تعداد', flex: 1 },
     ],
     []
   )
