@@ -1,9 +1,9 @@
 import { DataGridPro } from '@mui/x-data-grid-pro'
-import { AppBar, Box, Switch, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, Button, Switch, Toolbar, Typography } from '@mui/material'
 import useAppHook from './AppHook'
 
 function App() {
-  const { columns, data, switchThemeMode } = useAppHook()
+  const { columns, data, switchThemeMode, downloadCsv } = useAppHook()
 
   return (
     <div dir='rtl'>
@@ -35,6 +35,14 @@ function App() {
           columns={columns}
           rows={data ? data : []}
         />
+
+        <Button
+          sx={{ mx: 'auto', display: 'block', mt: '1rem' }}
+          disabled={!data}
+          variant='contained'
+          onClick={downloadCsv}>
+          دانلود به صورت CSV
+        </Button>
       </Box>
     </div>
   )
