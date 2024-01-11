@@ -39,10 +39,12 @@ export default function useAppHook() {
   )
 
   const downloadCsv = useCallback(() => {
-    const fileContent = data?.reduce(
-      (p, c) => `${p}${c.id}, ${c.buyer}, ${c.price}, ${c.vol}\n`,
-      ''
-    )
+    const fileContent =
+      `آیدی, خریدار, قیمت, مقدار\n` +
+      data?.reduce(
+        (p, c) => `${p}${c.id}, ${c.buyer}, ${c.price}, ${c.vol}\n`,
+        ''
+      )
     const link = document.createElement('a')
     const fileBlob = new Blob([fileContent ?? ''], { type: 'text/csv' })
 
