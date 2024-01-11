@@ -40,7 +40,7 @@ export default function useAppHook() {
 
   const downloadCsv = useCallback(() => {
     const fileContent =
-      `آیدی, خریدار, قیمت, مقدار\n` +
+      'id, buyer, price, volumn\n' +
       data?.reduce(
         (p, c) => `${p}${c.id}, ${c.buyer}, ${c.price}, ${c.vol}\n`,
         ''
