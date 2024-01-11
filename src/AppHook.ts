@@ -38,11 +38,30 @@ export default function useAppHook() {
     []
   )
 
-  const downloadCsv = useCallback(() => {}, [])
+  const downloadCsv = useCallback(() => {
+    const fileContent = data?.reduce(
+      (p, c) => `${p}${c.id}, ${c.buyer}, ${c.price}, ${c.vol}\n`,
+      ''
+    )
+    const link = document.createElement('a')
+    const fileBlob = new Blob([fileContent ?? ''], { type: 'text/csv' })
+
+    link.href = URL.createObjectURL(fileBlob)
+    link.download = 'output.csv'
+    link.click()
+
+    URL.revokeObjectURL(link.href)
+  }, [data])
 
   useEffect(() => {
     console.clear()
   }, [])
 
-  return { columns, data, isLoading, switchThemeMode: ctx.switchMode, downloadCsv }
+  return {
+    columns,
+    data,
+    isLoading,
+    switchThemeMode: ctx.switchMode,
+    downloadCsv,
+  }
 }
