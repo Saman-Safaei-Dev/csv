@@ -1,8 +1,11 @@
+import { useId } from 'react'
 import { DataGridPro } from '@mui/x-data-grid-pro'
 import { AppBar, Box, Button, Switch, Toolbar, Typography } from '@mui/material'
+
 import useAppHook from './AppHook'
 
 function App() {
+  const switchId = useId()
   const { columns, data, switchThemeMode, downloadCsv } = useAppHook()
 
   return (
@@ -17,8 +20,13 @@ function App() {
             تسک
           </Typography>
 
-          <Typography>تم دارک</Typography>
-          <Switch onChange={(ev) => switchThemeMode(ev.target.checked)} />
+          <Typography component='label' htmlFor={switchId}>
+            تم دارک
+          </Typography>
+          <Switch
+            id={switchId}
+            onChange={(ev) => switchThemeMode(ev.target.checked)}
+          />
         </Toolbar>
       </AppBar>
       <Box padding={4} maxWidth={1280} width='100%' mx='auto'>
