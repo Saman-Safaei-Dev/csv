@@ -1,10 +1,11 @@
-import { useCallback, useContext, useEffect, useMemo } from 'react'
-import useWebSocket from 'react-use-websocket'
-import { ThemeContext } from './contexts/Theme'
 import useSWR from 'swr'
-import { latestDataQuery } from './api/table-data'
-import { keys } from './api'
+import useWebSocket from 'react-use-websocket'
 import { GridValueFormatterParams } from '@mui/x-data-grid-pro'
+import { useCallback, useContext, useEffect, useMemo } from 'react'
+
+import { keys } from './api'
+import { ThemeContext } from './contexts/Theme'
+import { latestDataQuery } from './api/table-data'
 
 export default function useAppHook() {
   const ctx = useContext(ThemeContext)
