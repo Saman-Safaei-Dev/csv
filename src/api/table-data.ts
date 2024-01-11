@@ -1,13 +1,15 @@
 import { api } from '.'
 
+export type SingleBuyerData = {
+  id: number
+  buyer: string
+  price: number
+  vol: number
+}
+
 export type LatestDataResult = Record<
   string,
-  {
-    id: number
-    buyer: string
-    price: number
-    vol: number
-  }
+  SingleBuyerData
 >
 
 export function latestDataQuery() {
