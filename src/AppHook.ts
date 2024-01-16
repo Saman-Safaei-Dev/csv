@@ -1,5 +1,5 @@
-import useSWR from 'swr'
 import useWebSocket from 'react-use-websocket'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { GridValueFormatterParams } from '@mui/x-data-grid-pro'
 import { useCallback, useContext, useEffect, useMemo } from 'react'
 
@@ -8,22 +8,29 @@ import { ThemeContext } from './contexts/Theme'
 import { latestDataQuery } from './api/table-data'
 
 export default function useAppHook() {
+  const client = useQueryClient()
   const ctx = useContext(ThemeContext)
-  const { data, isLoading, mutate } = useSWR(keys.TABLE_DATA, latestDataQuery)
+  const { data, isLoading } = useQuery({
+    queryKey: [keys.TABLE_DATA],
+    queryFn: latestDataQuery,
+  })
 
   useWebSocket(import.meta.env.VITE_SOCKET_URL, {
     onMessage(e) {
       try {
         const newData = JSON.parse(e.data)
 
-        mutate((prev) => {
-          if (!prev) return prev
-          const prevCopy = Array.from(prev)
-          const target = prevCopy.find((item) => item.id === newData.id)
-          if (!target) return prev
-          prevCopy.splice(prevCopy.indexOf(target), 1, newData)
-          return prevCopy
-        })
+        client.setQueryData(
+          [keys.TABLE_DATA],
+          (prev: Awaited<ReturnType<typeof latestDataQuery>>) => {
+            if (!prev) return prev
+            const prevCopy = Array.from(prev)
+            const target = prevCopy.find((item) => item.id === newData.id)
+            if (!target) return prev
+            prevCopy.splice(prevCopy.indexOf(target), 1, newData)
+            return prevCopy
+          }
+        )
       } catch (e) {
         console.log(e)
       }
