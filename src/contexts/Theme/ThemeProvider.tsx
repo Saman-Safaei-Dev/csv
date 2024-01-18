@@ -10,7 +10,7 @@ export function ThemeContextProvider(props: ThemeContextProviderProps) {
   
   const theme = createTheme({
     palette: { mode },
-    typography: { fontFamily: 'inherit' },
+    typography: { fontFamily: 'Vazirmatn, sans-serif' },
   })
 
   const switchMode = (isDark: boolean) => {
