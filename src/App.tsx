@@ -27,11 +27,14 @@ function App() {
           [keys.TABLE_DATA],
           (prev: Awaited<ReturnType<typeof latestDataQuery>>) => {
             if (!prev) return prev
-            const prevCopy = Array.from(prev)
-            const target = prevCopy.find((item) => item.id === newData.id)
-            if (!target) return prev
-            prevCopy.splice(prevCopy.indexOf(target), 1, newData)
-            return prevCopy
+
+            const targetIndex = prev.findIndex((item) => item.id === newData.id)
+            if (targetIndex === -1) return prev
+
+            const updatedData = [...prev]
+            updatedData[targetIndex] = newData
+
+            return updatedData
           }
         )
       } catch (e) {
@@ -55,16 +58,16 @@ function App() {
 
   const downloadCsv = useCallback(() => {
     if (!data) return
-    
+
     const fileContent =
       'id, buyer, price, volumn\n' +
       data?.reduce(
         (p, c) => `${p}${c.id}, ${c.buyer}, ${c.price}, ${c.vol}\n`,
         ''
       )
-    const link = document.createElement('a')
     const fileBlob = new Blob([fileContent ?? ''], { type: 'text/csv' })
 
+    const link = document.createElement('a')
     link.href = URL.createObjectURL(fileBlob)
     link.download = 'output.csv'
     link.click()
