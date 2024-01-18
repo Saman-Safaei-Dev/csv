@@ -7,10 +7,7 @@ export type SingleBuyerData = {
   vol: number
 }
 
-export type LatestDataResult = Record<
-  string,
-  SingleBuyerData
->
+export type LatestDataResult = Record<string, SingleBuyerData>
 
 export function latestDataQuery() {
   return api<LatestDataResult>('/lastdata').then((res) => Object.values(res))
