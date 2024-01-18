@@ -1,8 +1,4 @@
-html,
-body {
-  font-family: Vazirmatn, sans-serif;
-}
-
+/* Remove mui datagrid pro license */
 .rm-license > div > div:nth-child(3) {
   display: none !important;
 }
